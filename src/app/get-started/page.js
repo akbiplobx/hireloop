@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import Link from "next/link";
+// Better Auth ক্লায়েন্ট ফাইলটি ইম্পোর্ট করা হলো (সঠিক পাথে)
+import { authClient } from "../lib/auth-client"; 
 
 export default function AuthPage() {
-  // ইউজার বর্তমানে সাইন-আপ পেজে আছে নাকি লগইন পেজে তা ট্র্যাক করার জন্য স্টেট
   const [isSignUp, setIsSignUp] = useState(true); 
-  
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [status, setStatus] = useState({ type: "", message: "" });
   const [loading, setLoading] = useState(false);
@@ -14,30 +14,44 @@ export default function AuthPage() {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // ফর্ম সাবমিট (Better Auth)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    console.log("Form submit trigger hoyeche!", formData);
+
     setLoading(true);
     setStatus({ type: "", message: "" });
 
     try {
       if (isSignUp) {
-        // Better Auth Sign Up Call
-        // const { data, error } = await authClient.signUp.email({
-        //   email: formData.email,
-        //   password: formData.password,
-        //   name: formData.name,
-        // });
+        // ১. কমেন্ট খুলে Better Auth সাইন-আপ কল সচল করা হলো
+        const { data, error } = await authClient.signUp.email({
+          email: formData.email,
+          password: formData.password,
+          name: formData.name,
+        });
+
+        // যদি Better Auth কোনো এরর দেয় (যেমন: ইমেইল অলরেডি আছে)
+        if (error) {
+          throw new Error(error.message || "Sign up failed.");
+        }
+
         setStatus({ type: "success", message: "Account created successfully! Welcome to Hireloop." });
       } else {
-        // Better Auth Sign In Call
-        // const { data, error } = await authClient.signIn.email({
-        //   email: formData.email,
-        //   password: formData.password,
-        // });
+        // ২. কমেন্ট খুলে Better Auth সাইন-ইন কল সচল করা হলো
+        const { data, error } = await authClient.signIn.email({
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (error) {
+          throw new Error(error.message || "Sign in failed.");
+        }
+
         setStatus({ type: "success", message: "Logged in successfully! Redirecting..." });
       }
     } catch (err) {
+      // ব্যাকএন্ড বা ডাটাবেজের আসল এরর মেসেজটি এখানে ধরা পড়বে
       setStatus({ type: "error", message: err.message || "Something went wrong." });
     } finally {
       setLoading(false);
@@ -46,21 +60,19 @@ export default function AuthPage() {
 
   const handleGoogleSignIn = async () => {
     try {
-      // await authClient.signIn.social({ provider: "google" });
+      await authClient.signIn.social({ provider: "google" });
       console.log("Google Auth Triggered");
     } catch (err) {
       setStatus({ type: "error", message: "Google authentication failed." });
     }
   };
 
+  // বাকি রিটার্ন (UI JSX) কোডটি আপনার ফাইলে যা আছে হুবহু একই থাকবে...
   return (
+    // ... আপনার বাকি JSX কোড
     <div className="w-full bg-black text-white min-h-[85vh] flex items-center justify-center relative overflow-hidden px-4 py-12">
-      {/* ব্যাকগ্রাউন্ড ইউনিক গ্লো ইফেক্ট */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none"></div>
-
+      {/* (আপনার ফাইলের বাকি অংশটুকু এখানে থাকবে) */}
       <div className="w-full max-w-md p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800/80 backdrop-blur-md shadow-2xl relative z-10">
-        
-        {/* ডাইনামিক হেডিং */}
         <div className="text-center mb-8">
           <h2 className="text-2xl font-black tracking-tight">
             {isSignUp ? "Create your account" : "Welcome back"}
@@ -70,7 +82,6 @@ export default function AuthPage() {
           </p>
         </div>
 
-        {/* সাকসেস বা এরর মেসেজ অ্যালার্ট */}
         {status.message && (
           <div className={`p-3 rounded-lg text-xs font-medium mb-5 border ${
             status.type === "success" 
@@ -81,10 +92,7 @@ export default function AuthPage() {
           </div>
         )}
 
-        {/* ফর্ম */}
         <form onSubmit={handleSubmit} className="space-y-4">
-          
-          {/* ইউজার যদি সাইন-আপ মোডে থাকে, শুধু তখনই 'Name' ইনপুট ফিল্ডটি দেখাবে */}
           {isSignUp && (
             <div>
               <label className="block text-[11px] font-medium text-zinc-400 uppercase tracking-wider mb-1.5">Full Name</label>
@@ -126,7 +134,6 @@ export default function AuthPage() {
             />
           </div>
 
-          {/* প্রধান সাবমিট বাটন (ডাইনামিক টেক্সট) */}
           <button
             type="submit"
             disabled={loading}
@@ -136,13 +143,11 @@ export default function AuthPage() {
           </button>
         </form>
 
-        {/* ডিভাইডার */}
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-zinc-800"></div></div>
           <div className="relative flex justify-center text-[10px] uppercase"><span className="bg-transparent px-2 text-zinc-500">Or continue with</span></div>
         </div>
 
-        {/* গুগল বাটন */}
         <button
           onClick={handleGoogleSignIn}
           type="button"
@@ -154,21 +159,19 @@ export default function AuthPage() {
           <span>Continue with Google</span>
         </button>
 
-        {/* নিচে এখানে ডাইনামিক বাটন ও লিঙ্কটি এড করা হয়েছে */}
         <p className="text-center text-xs text-zinc-500 mt-6">
           {isSignUp ? "Already have an account? " : "Don't have an account? "}
           <button
             type="button"
             onClick={() => {
               setIsSignUp(!isSignUp);
-              setStatus({ type: "", message: "" }); // মোড চেঞ্জ হলে মেসেজ ক্লিয়ার হবে
+              setStatus({ type: "", message: "" });
             }}
             className="text-indigo-400 hover:underline font-medium bg-transparent border-none cursor-pointer focus:outline-none"
           >
             {isSignUp ? "Log in" : "Sign up"}
           </button>
         </p>
-
       </div>
     </div>
   );
