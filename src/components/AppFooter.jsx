@@ -32,7 +32,7 @@ export default function AppFooter() {
           <div className="lg:col-span-2 space-y-4">
             <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-white">
               {/* Programming Hero স্টাইল কাস্টম SVG লোগো */}
-              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="32" height="32" rx="8" fill="url(#footerLogoGrad)" />
                 <path d="M10 22V10L15 14L20 10V22" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 <defs>
@@ -41,8 +41,15 @@ export default function AppFooter() {
                     <stop offset="1" stopColor="#6366F1" />
                   </linearGradient>
                 </defs>
-              </svg>
-              <span>Hire<span className="text-indigo-400">loop</span></span>
+              </svg> */}
+              {/* <span>Hire<span className="text-indigo-400">loop</span></span> */}
+              <Link href="/" className="flex items-center">
+              <img 
+                src="/logo.png" 
+                alt="Logo" 
+                className="h-8 w-auto object-contain block dark:invert-0" 
+              />
+            </Link>
             </Link>
             <p className="max-w-sm text-sm text-zinc-400 leading-relaxed">
               The AI-native career platform. Built for people who take their work seriously.
@@ -112,7 +119,7 @@ export default function AppFooter() {
 
           {/* কপিরাইট এবং পলিসি টেক্সট */}
           <div className="flex flex-col sm:flex-row items-center gap-4 text-xs text-zinc-500 order-1 sm:order-2 w-full sm:w-auto justify-between sm:justify-start">
-            <span>Copyright 2026 — Hireloop</span>
+            <span>Copyright 2026 — A K Biplob</span>
             <div className="flex gap-4">
               <Link href="/terms" className="hover:text-zinc-300 transition-colors">Terms & Policy</Link>
               <Link href="/privacy" className="hover:text-zinc-300 transition-colors">Privacy Guideline</Link>

@@ -10,9 +10,8 @@ export default function AppNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
-  
   const { data: session, isPending } = authClient.useSession(); 
-  const user = session?.user; // Better Auth সেশন থেকে ইউজার ডাটা নেওয়া
+  const user = session?.user; // Better Auth সেশন থেকে ইউজার ডাটা নেওয়া
   const userRole = "recruiter"; // admin, recruiter, job-seeker
 
   const menuItems = [
@@ -47,7 +46,7 @@ export default function AppNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           
-          {/* ১. বাম পাশের অংশ: লোগো */}
+          {/* ১. বাম পাশের অংশ: লোগো ফিক্সড (টেক্সট টাইটেল স্কিপ করা হয়েছে) */}
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -60,8 +59,13 @@ export default function AppNavbar() {
               </svg>
             </button>
 
-            <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight text-gray-900 dark:text-white">
-              <span>Hire<span className="text-indigo-600 dark:text-indigo-400">loop</span></span>
+            {/* শুধু লোগো ইমেজ রাখা হলো এবং রেসপন্সিভ সাইজ ফিক্স করা হলো */}
+            <Link href="/" className="flex items-center">
+              <img 
+                src="/logo.png" 
+                alt="Logo" 
+                className="h-8 w-auto object-contain block dark:invert-0" 
+              />
             </Link>
           </div>
 
@@ -142,7 +146,6 @@ export default function AppNavbar() {
                         My Settings
                       </Link>
                       
-                     
                       <button
                         onClick={handleSignOut}
                         type="button"

@@ -45,42 +45,44 @@ export default function StatsSection() {
   ];
 
   return (
-    <section 
-      className="w-full bg-black text-white py-24 px-4 relative overflow-hidden bg-bottom bg-no-repeat"
-      style={{
-        // এখানে আপনার গ্লোব ইমেজের পাথটি বসিয়ে দিন
-        backgroundImage: `url('/globe.png')`, 
-        backgroundSize: '800px', // ইমেজের সাইজ প্রয়োজনমতো ছোট-বড় করতে পারবেন
-      }}
-    >
-      {/* গ্লোব ইমেজের চারপাশের সেই ইউনিক ব্লু/পার্পল গ্লো ইফেক্ট */}
-      <div className="absolute bottom-[-150px] left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-indigo-600/20 rounded-full blur-[100px] pointer-events-none"></div>
+    <section className="w-full bg-black text-white pt-24 pb-40 px-4 relative overflow-hidden min-h-[750px] flex items-center justify-center">
+      
+      {/* গ্লোব ব্যাকগ্রাউন্ড - যা টেক্সট ও কার্ডের নিচে অ্যাবসলিউটলি প্লেসড থাকবে */}
+      <div 
+        className="absolute inset-0 z-0 bg-no-repeat pointer-events-none"
+        style={{
+          backgroundImage: `url('/globe.png')`,
+          backgroundSize: '1150px',
+          backgroundPosition: 'center -110px', // ইমেজটিকে ঠিক হেডিংয়ের পেছনে সেট করার জন্য পজিশন
+        }}
+      />
 
-      <div className="max-w-6xl mx-auto relative z-10 text-center">
+      {/* অতিরিক্ত ডার্ক ওভারলে (ইমেজের টপ ও বটম এজ স্মুথ করার জন্য) */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black/90 pointer-events-none z-0"></div>
+
+      <div className="max-w-6xl w-full mx-auto relative z-10 text-center">
         {/* প্রধান হেডিং */}
-        <h2 className="text-2xl sm:text-4xl font-normal text-zinc-300 tracking-tight max-w-2xl mx-auto leading-tight mb-16">
+        <h2 className="text-2xl sm:text-4xl font-normal text-zinc-300 tracking-tight max-w-2xl mx-auto leading-tight mb-24 relative z-20">
           Assisting over <span className="font-semibold text-white">15,000 job seekers</span> <br />
           find their dream positions.
         </h2>
 
-        {/* ৪টি কার্ডের গ্রিড লেআউট */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-left">
+        {/* ৪টি কার্ডের গ্রিড লেআউট - যা গ্লোবের গায়ে ভেসে থাকবে */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 text-left relative z-20 mt-12">
           {stats.map((stat) => (
             <div
               key={stat.id}
-              className="p-6 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800/60 backdrop-blur-md hover:border-zinc-700/80 transition-all duration-300 group flex flex-col justify-between min-h-[160px] sm:min-h-[180px]"
+              className="p-6 sm:p-7 rounded-2xl bg-zinc-950/80 border border-zinc-900 backdrop-blur-md hover:border-zinc-800 transition-all duration-300 group flex flex-col justify-between min-h-[160px] sm:min-h-[175px]"
             >
-              {/* আইকন হোল্ডার */}
-              <div className="mb-4 text-zinc-400 group-hover:text-white transition-colors duration-300">
+              <div className="mb-4 text-zinc-500 group-hover:text-white transition-colors duration-300">
                 {stat.icon}
               </div>
 
-              {/* ভ্যালু এবং লেবেল */}
               <div>
-                <div className="text-3xl sm:text-5xl font-bold tracking-tight text-white mb-1.5">
+                <div className="text-3xl sm:text-4.5xl font-bold tracking-tight text-white mb-1">
                   {stat.value}
                 </div>
-                <div className="text-xs sm:text-sm text-zinc-500 font-medium tracking-wide">
+                <div className="text-[11px] sm:text-xs text-zinc-500 font-medium tracking-wide">
                   {stat.label}
                 </div>
               </div>

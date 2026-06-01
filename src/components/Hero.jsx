@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Hero() {
   return (
-    <div className="w-full bg-black text-white font-sans min-h-[80vh] flex flex-col justify-center relative overflow-hidden py-12">
+    <div className="w-full bg-black text-white font-sans min-h-[75vh] flex flex-col justify-center relative">
       
       {/* ব্যাকগ্রাউন্ড গ্লো ইফেক্ট */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[100px] pointer-events-none"></div>
